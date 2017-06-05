@@ -21,9 +21,28 @@ export default {
        if(res.success)
        {
         commit('getArticle',res.data);
+        commit('getArticleAuthor',res.data.author.loginname);
        }
      }).catch((err)=>{
        console.log('AticleDetail',err);
      })
+   },
+
+   getUserInfo({commit,state},req)
+   {
+     if(!req.username)
+     {
+       throw new Error('username is required.');
+     }
+
+     let url=`https://cnodejs.org/api/v1/user/${req.username}`
+      get(url).then((res)=>{
+        if(res.success)
+        {
+          commit('getUserInfo',res.data);
+        }
+      }).catch((err)=>{
+         console.log('AticleDetail',err);
+      })
    }
 }
