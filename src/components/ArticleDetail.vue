@@ -44,7 +44,7 @@
             }
         },
         created () {
-            document.body.scrollTop=0;
+            //document.body.scrollTop=0;
             this.$store.dispatch('getArticle',{'articleId':this.$route.params.id});
         }
     }
