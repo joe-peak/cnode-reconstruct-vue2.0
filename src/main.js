@@ -13,10 +13,16 @@ Vue.config.productionTip = false;
 Vue.component('icon', Icon);
 //Vue.component('icon',Icon);
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
+Vue.component('testComponent',{
+  template:'<div>Hello I am a test component</div>'
+});
+
+let app=new Vue({
+  /*el: '#app',*/
   router,
   store,
   template: '<App/>',
   components: { App }
-})
+});
+
+app.$mount('#app')

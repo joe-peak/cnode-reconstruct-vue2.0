@@ -20,7 +20,7 @@
                </p>
            </section>
         </section>
-        <section class='recent-join-topic' v-if='userInfo.recent_replies.length>0'>
+        <section class='recent-join-topic' v-if='userInfo.recent_replies&&userInfo.recent_replies.length>0'>
             <header class='list-header'>最近参与的话题</header>
             <section class='topic-item'  v-for='item in userInfo.recent_replies' key='$index'>
                 <img :src="item.author.avatar_url" :alt="item.author.loginname" :title='item.author.loginname'>
@@ -29,7 +29,7 @@
                </router-link>
             </section>
         </section>
-        <section class='recent-create-topic' v-if='userInfo.recent_topics.length>0'>
+        <section class='recent-create-topic' v-if='userInfo.recent_topics&&userInfo.recent_topics.length>0'>
             <header class='list-header'>最近创建的话题</header>
             <section class='topic-item'  v-for='item in userInfo.recent_topics' key='$index'>
                  <img :src="item.author.avatar_url" :alt="item.author.loginname" :title='item.author.loginname'>
@@ -58,6 +58,14 @@
             let params={username:this.$route.params.username};
             this.$store.dispatch('getUserInfo',params);
             console.log(this.$store);
+        },
+        beforeRouteEnter(to,from,next)
+        {
+            next((vm)=>{
+                let params={username:vm.$route.params.username};
+                vm.$store.dispatch('getUserInfo',params);
+                console.log(vm.$store);
+            })
         }
     }
 </script>
