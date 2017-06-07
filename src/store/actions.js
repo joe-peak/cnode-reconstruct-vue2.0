@@ -1,5 +1,29 @@
 import get from '@/assets/js/xhr.js'
 import axios from 'axios'
+/**
+ * 拦截器必须返回use回调函数的config参数
+ */
+axios.interceptors.request.use((config)=>{
+  console.log('Interceptors in request');
+  console.log(config);
+  config.timeout=2500;
+  return config;
+},(err)=>{
+  return Promise.reject(err);
+});
+
+axios.interceptors.response.use((res)=>{
+  console.log('Interceptors in response');
+  console.log(res);
+  res.statusText='Successfull';
+  return res;
+},(err)=>{
+  return Promise.reject(err);
+});
+
+let CancelToken=axios.CancelToken;
+let source=CancelToken.source();
+
 export default {
    getArticleLists({commit,state})
    {
@@ -21,12 +45,21 @@ export default {
             limit:state.articleNumber,
             mdrender:'false',
             page:1
-          }
+          },
+          cancelToken:source.token
         }
        ).then(res=>{
         commit('getArticleList',res.data.data);
       }).catch(err=>{
-       console.log('MaiSec.vue: ', res);
+        if(axios.isCancel(err))
+        {
+          console.log('MaiSec.vue: Request canceled', err.message);
+        }
+        else
+        {
+          console.log('MaiSec.vue: ',err.response);
+        }
+       
       })
    },
 
