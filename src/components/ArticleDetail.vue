@@ -46,6 +46,15 @@
         created () {
             //document.body.scrollTop=0;
             this.$store.dispatch('getArticle',{'articleId':this.$route.params.id});
+        },
+        watch: {
+            '$route':function(newVal,oldVal)
+            {
+                if(newVal!==oldVal)
+                {
+                    console.log('router changed.');
+                }
+            }
         }
     }
 </script>

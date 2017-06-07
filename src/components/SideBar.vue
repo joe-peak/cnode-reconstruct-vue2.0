@@ -34,8 +34,8 @@
         },
     
         /*
-        *article detail组件加载时会初始化articleAuthor，sidebar组件同时加载，
-        *但是或渠道的是还没有被article detail组件修改的旧值，所以需要在检测到新值是去获取user数据
+        *Article detail组件加载时会初始化articleAuthor，sidebar组件同时加载，
+        *但是获取到的是还没有被article detail组件修改的旧值，所以需要在检测到新值是去获取user数据
         */
         watch:{
             articleAuthor(val)

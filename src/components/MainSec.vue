@@ -1,7 +1,7 @@
 <template>
   <div class='main'>
     <div class="article-item" v-for='article in articleLists' k='article.id'>
-        <router-link :to='{name:"UserRoute",params:{username:article.author.loginname}}'><img :src="article.author.avatar_url" :alt="article.author.loginname" :title='article.author.loginname'></router-link>
+        <router-link :to='{name:"UserRoute",params:{username:article.author?article.author.loginname:""}}'><img :src="article.author?article.author.avatar_url:''" :alt="article.author?article.author.loginname:''" :title="article.author?article.author.loginname:''"></router-link>
         <div class='text'>
         <router-link :to='{name:"ArticleRoute",params:{id:article.id}}' tag='p'  v-cloak class='article-title'>
                 {{article.title}}
@@ -35,6 +35,10 @@
 
            formatTime(timeObj)
             {
+                if(!timeObj)
+                {
+                    return;
+                }
                 let time=timeObj.toString();
                 let charIndex=time.toString().toLowerCase().indexOf('t');
                 if(time && charIndex!==-1)
@@ -56,7 +60,8 @@
             }
         },
         created () {
-            this.getArticleLists();
+            /*this.getArticleLists();*/
+             this.$store.dispatch('getArticleLists');
         },
         mounted () {
           /*  let _self=this;
